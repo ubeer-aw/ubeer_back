@@ -1,5 +1,6 @@
 package fr.ubeer.ubeer_back.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +19,7 @@ public class Beer {
     @Column(name="PRIX", nullable = false)
     private double price;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "BRASSERIE_ID")
     private Brewery brewery;
 
