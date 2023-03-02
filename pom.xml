@@ -14,7 +14,7 @@
 	<name>ubeer_back</name>
 	<description>ubeer_back</description>
 	<properties>
-		<java.version>16</java.version>
+		<java.version>11</java.version>
 	</properties>
 
 	<dependencies>
