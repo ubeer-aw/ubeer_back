@@ -14,15 +14,10 @@
 	<name>ubeer_back</name>
 	<description>ubeer_back</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>16</java.version>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-			<version>2.5.5</version>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
