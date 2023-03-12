@@ -35,4 +35,5 @@ jobs:
         with:
           context: ./
           push: true
-          tags: anymok/ubeer-back:${{ github.sha }}
+          #tags: anymok/ubeer-back:${{ github.sha }} dynamique pour plus tard
+          tags: anymok/ubeer-back:latest
