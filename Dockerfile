@@ -1,5 +1,5 @@
 # Définit l'image de base pour construire le projet
-FROM maven:3.8.4-jdk-17 AS build
+FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /app
 COPY pom.xml .
 RUN mvn -B dependency:resolve dependency:resolve-plugins
