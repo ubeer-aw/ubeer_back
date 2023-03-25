@@ -11,14 +11,13 @@ public class Brewery {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true)
     private Integer id;
-
-    @Column(name = "NOM", nullable = false)
+    @Column(name = "NOM", length = 1000, nullable = false)
     private String name;
-
-    @Column(name="DESCRIPTION", length = 1000)
+    @Column(name="DESCRIPTION", length = 5000)
     private String description;
-
-    @Column(name = "IMAGE", nullable = false)
+    @Column(name="NOTE")
+    private double stars;
+    @Column(name = "IMAGE", length = 1000, nullable = false)
     private String img;
     @OneToMany(mappedBy="brewery", cascade = CascadeType.ALL)
     private Set<Beer> beers;
@@ -50,6 +49,14 @@ public class Brewery {
         this.description = description;
     }
 
+    public double getStars() {
+        return stars;
+    }
+
+    public void setStars(double stars) {
+        this.stars = stars;
+    }
+
     public String getImg() {
         return img;
     }
@@ -72,6 +79,7 @@ public class Brewery {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", stars=" + stars +
                 ", img='" + img + '\'' +
                 ", beers=" + beers +
                 '}';
