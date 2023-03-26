@@ -20,7 +20,7 @@ public class Brewery {
     @Column(name = "IMAGE", length = 1000, nullable = false)
     private String img;
     @OneToMany(mappedBy="brewery", cascade = CascadeType.ALL)
-    private Set<Beer> beers;
+    private Set<Product> products;
 
     public Brewery() {
     }
@@ -65,12 +65,12 @@ public class Brewery {
         this.img = img;
     }
 
-    public Set<Beer> getBeers() {
-        return beers;
+    public Set<Product> getProducts() {
+        return products;
     }
 
-    public void setBeers(Set<Beer> beers) {
-        this.beers = beers;
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class Brewery {
                 ", description='" + description + '\'' +
                 ", stars=" + stars +
                 ", img='" + img + '\'' +
-                ", beers=" + beers +
+                ", products=" + products +
                 '}';
     }
 }

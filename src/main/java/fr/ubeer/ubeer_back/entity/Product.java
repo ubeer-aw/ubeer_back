@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "BIERE")
-public class Beer {
+@Table(name = "PRODUIT")
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true)
@@ -19,7 +19,6 @@ public class Beer {
     @Column(name="PRIX", nullable = false)
     private double price;
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "BRASSERIE_ID")
     private Brewery brewery;
 
@@ -27,7 +26,7 @@ public class Beer {
         price = 0;
     }
 
-    public Beer() {
+    public Product() {
     }
 
     public Integer getId() {
@@ -70,8 +69,8 @@ public class Beer {
         this.price = price;
     }
 
-    public Brewery getBrewery() {
-        return brewery;
+    public Integer getBrewery() {
+        return brewery.getId();
     }
 
     public void setBrewery(Brewery brewery) {
@@ -80,7 +79,7 @@ public class Beer {
 
     @Override
     public String toString() {
-        return "Beer{" +
+        return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +

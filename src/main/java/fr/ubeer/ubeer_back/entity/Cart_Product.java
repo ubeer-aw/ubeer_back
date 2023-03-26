@@ -3,8 +3,8 @@ package fr.ubeer.ubeer_back.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "PANIER_BIERE")
-public class Cart_Beer {
+@Table(name = "PANIER_PRODUIT")
+public class Cart_Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true)
@@ -14,11 +14,11 @@ public class Cart_Beer {
     private Cart cart;
     @ManyToOne
     @JoinColumn(name = "BIERE_ID")
-    private Beer beer;
+    private Product product;
     @Column(name = "QUANTITE")
     private int quantity;
 
-    public Cart_Beer() {
+    public Cart_Product() {
     }
 
     public Integer getId() {
@@ -37,12 +37,12 @@ public class Cart_Beer {
         this.cart = cart;
     }
 
-    public Beer getBeer() {
-        return beer;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setBeer(Beer beer) {
-        this.beer = beer;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getQuantity() {
@@ -55,10 +55,10 @@ public class Cart_Beer {
 
     @Override
     public String toString() {
-        return "Cart_Beer{" +
+        return "Cart_Product{" +
                 "id=" + id +
                 ", cart=" + cart +
-                ", beer=" + beer +
+                ", product=" + product +
                 ", quantity=" + quantity +
                 '}';
     }

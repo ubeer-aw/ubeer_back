@@ -1,6 +1,5 @@
 package fr.ubeer.ubeer_back.controller;
 
-import fr.ubeer.ubeer_back.entity.Beer;
 import fr.ubeer.ubeer_back.entity.Cart;
 import fr.ubeer.ubeer_back.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class CartController {
     private CartService cartService;
 
     @GetMapping( "/cart/{id}" )
-    public Cart getBeerById(@PathVariable Integer id) {
+    public Cart getProductById(@PathVariable Integer id) {
         return cartService.findById(id);
     }
 }

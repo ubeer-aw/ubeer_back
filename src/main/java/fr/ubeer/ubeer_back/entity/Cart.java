@@ -22,7 +22,7 @@ public class Cart {
     private double total;
 
     @OneToMany(mappedBy="cart", cascade = CascadeType.ALL)
-    private Set<Cart_Beer> content;
+    private Set<Cart_Product> content;
 
     {
         date = LocalDateTime.now();
