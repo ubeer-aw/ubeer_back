@@ -1,16 +1,26 @@
-# Définit l'image de base pour construire le projet
-FROM maven:3.8.3-openjdk-17 AS build
+# Utiliser une image de base Maven
+FROM maven:3.8.3-openjdk-11-slim AS build
+
+# Définir le répertoire de travail
 WORKDIR /app
 
-# Copie le fichier pom.xml et les sources
-COPY pom.xml src ./src
+# Copier le fichier pom.xml dans le répertoire de travail
+COPY pom.xml .
 
-# Compile l'application
-RUN mvn -B clean package
+# Copier les autres fichiers source dans le répertoire de travail
+COPY src ./src
 
-# Définit l'image de base pour exécuter l'application
-FROM openjdk:17-alpine
-COPY --from=build /app/target/ubeer_back-0.0.1-SNAPSHOT.jar /app.jar
-ENV PORT 8080
-EXPOSE 8080
-CMD ["java", "-jar", "/app.jar"]
+# Compiler le projet Maven
+RUN mvn clean install
+
+# Utiliser une image de base OpenJDK pour l'exécution
+FROM openjdk:11-slim
+
+# Définir le répertoire de travail
+WORKDIR /app
+
+# Copier les fichiers de construction à partir de l'étape précédente
+COPY --from=build /app/target/nom-du-jar.jar .
+
+# Exécuter le jar
+CMD ["java", "-jar", "nom-du-jar.jar"]
