@@ -1,12 +1,12 @@
-# Définit l'image de base pour construire et exécuter l'application
+# Définit l'image de base pour construire le projet
 FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /app
+COPY pom.xml .
+RUN mvn -B dependency:resolve dependency:resolve-plugins
 
-# Copie le fichier pom.xml et les sources
-COPY pom.xml ./src
-
-# Compile l'application
-RUN mvn -B clean package
+# Copie les sources et compile l'application
+COPY src ./src
+RUN mvn clean package
 
 # Définit l'image de base pour exécuter l'application
 FROM openjdk:17-alpine
