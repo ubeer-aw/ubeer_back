@@ -14,27 +14,27 @@ public class BreweryController {
     @Autowired
     private BreweryService breweryService;
 
-    @GetMapping( "/brewery" )
+    @GetMapping( "/api/public/brewery" )
     public List<Brewery> getBrewery() {
         return breweryService.findAll();
     }
 
-    @GetMapping( "/brewery/{id}" )
+    @GetMapping( "/api/public/brewery/{id}" )
     public Brewery getBreweryById(@PathVariable Integer id) {
         return breweryService.findById(id);
     }
 
-    @PostMapping( "/brewery" )
+    @PostMapping( "/api/private/brewery" )
     public void createBrewery(@RequestBody Brewery brewery) {
         breweryService.addBrewery(brewery);
     }
 
-    @PatchMapping( "/brewery" )
+    @PatchMapping( "/api/private/brewery" )
     public void updateBrewery(@RequestBody Brewery brewery) {
         breweryService.updateBrewery(brewery);
     }
 
-    @DeleteMapping( "/brewery/{id}" )
+    @DeleteMapping( "/api/private/brewery/{id}" )
     public void deleteBrewery(@PathVariable Integer id) {
         breweryService.deleteBreweryById(id);
     }
