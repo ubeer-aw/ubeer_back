@@ -12,27 +12,27 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping( "/product/{id}" )
+    @GetMapping( "/api/public/product/{id}" )
     public Product getProductById(@PathVariable Integer id) {
         return productService.findById(id);
     }
 
-    @GetMapping( "/product/{id}/brewery" )
+    @GetMapping( "/api/public/product/{id}/brewery" )
     public Product getBreweryIdByProductId(@PathVariable Integer id) {
         return productService.findById(id);
     }
 
-    @PostMapping( "/product" )
+    @PostMapping( "/api/private/product" )
     public void createProduct(@RequestParam Integer breweryId, @RequestBody Product product) {
         productService.addProduct(breweryId, product);
     }
 
-    @PatchMapping( "/product" )
+    @PatchMapping( "/api/private/product" )
     public void updateProduct(@RequestParam Integer breweryId, @RequestBody Product product) {
         productService.updateProduct(breweryId, product);
     }
 
-    @DeleteMapping( "/product/{id}" )
+    @DeleteMapping( "/api/private/product/{id}" )
     public void deleteProduct(@PathVariable Integer id) {
         productService.deleteProductById(id);
     }

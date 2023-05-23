@@ -15,7 +15,7 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @GetMapping( "/cart/{id}" )
+    @GetMapping( "/api/private/cart/{id}" )
     public Cart getProductById(@PathVariable Integer id) {
         return cartService.findById(id);
     }
