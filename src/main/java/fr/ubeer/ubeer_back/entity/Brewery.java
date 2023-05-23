@@ -11,6 +11,9 @@ public class Brewery {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true)
     private Integer id;
+    @ManyToOne
+    @JoinColumn(name = "UTILISATEUR_ID")
+    private User user;
     @Column(name = "NOM", length = 1000, nullable = false)
     private String name;
     @Column(name="DESCRIPTION", length = 5000)
@@ -71,6 +74,14 @@ public class Brewery {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     @Override

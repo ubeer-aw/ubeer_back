@@ -2,6 +2,7 @@ package fr.ubeer.ubeer_back.controller;
 
 import fr.ubeer.ubeer_back.entity.Brewery;
 import fr.ubeer.ubeer_back.service.BreweryService;
+import fr.ubeer.ubeer_back.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,9 @@ public class BreweryController {
     @Autowired
     private BreweryService breweryService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping( "/api/public/brewery" )
     public List<Brewery> getBrewery() {
         return breweryService.findAll();
@@ -25,17 +29,24 @@ public class BreweryController {
     }
 
     @PostMapping( "/api/private/brewery" )
-    public void createBrewery(@RequestBody Brewery brewery) {
+    public void createBrewery(@RequestBody Brewery brewery, @RequestParam String email) {
+        brewery.setUser(userService.findUserByEmail(email));
         breweryService.addBrewery(brewery);
     }
 
     @PatchMapping( "/api/private/brewery" )
-    public void updateBrewery(@RequestBody Brewery brewery) {
-        breweryService.updateBrewery(brewery);
+    public void updateBrewery(@RequestBody Brewery brewery, @RequestParam String email) {
+        if(userService.findUserByEmail(email).getId().equals(breweryService.findById(brewery.getId()).getUser().getId())) {
+            brewery.setUser(userService.findUserByEmail(email));
+            breweryService.updateBrewery(brewery);
+        }
     }
 
     @DeleteMapping( "/api/private/brewery/{id}" )
-    public void deleteBrewery(@PathVariable Integer id) {
-        breweryService.deleteBreweryById(id);
+    public void deleteBrewery(@PathVariable Integer id, @RequestParam String email) {
+        if(userService.findUserByEmail(email).getId().equals(breweryService.findById(id).getUser().getId())) {
+            breweryService.deleteBreweryById(id);
+        }
+
     }
 }
