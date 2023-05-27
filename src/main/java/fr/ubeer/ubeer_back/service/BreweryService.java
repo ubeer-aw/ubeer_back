@@ -1,8 +1,12 @@
 package fr.ubeer.ubeer_back.service;
 
 import fr.ubeer.ubeer_back.entity.Brewery;
+import fr.ubeer.ubeer_back.repository.BreweryPageRepository;
 import fr.ubeer.ubeer_back.repository.BreweryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +18,12 @@ public class BreweryService {
     @Autowired
     private BreweryRepository breweryRepository;
 
-    public List<Brewery> findAll() {
-        return (List<Brewery>) breweryRepository.findAll();
+    @Autowired
+    private BreweryPageRepository breweryPageRepository;
+
+    public Page<Brewery> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return breweryPageRepository.findAll(pageable);
     }
 
     public Brewery findById(Integer breweryId) {

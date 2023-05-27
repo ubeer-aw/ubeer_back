@@ -4,6 +4,7 @@ import fr.ubeer.ubeer_back.entity.Brewery;
 import fr.ubeer.ubeer_back.service.BreweryService;
 import fr.ubeer.ubeer_back.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +19,9 @@ public class BreweryController {
     @Autowired
     private UserService userService;
 
-    @GetMapping( "/api/public/brewery" )
-    public List<Brewery> getBrewery() {
-        return breweryService.findAll();
+    @GetMapping("/api/public/brewery")
+    public Page<Brewery> getBrewery(@RequestParam("page") int page, @RequestParam("size") int size) {
+        return breweryService.findAll(page, size);
     }
 
     @GetMapping( "/api/public/brewery/{id}" )
