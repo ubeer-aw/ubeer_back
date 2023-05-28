@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,9 +22,13 @@ public class BreweryService {
     @Autowired
     private BreweryPageRepository breweryPageRepository;
 
-    public Page<Brewery> findAll(int page, int size) {
+    public Page<Brewery> findAll(Double stars, ArrayList<String> categories, int page, int size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        return breweryPageRepository.findAll(pageable);
+
+        String chaine = categories.toString();
+        chaine = chaine.substring(1, chaine.length() - 1);
+        if(categories.isEmpty()) chaine = null;
+        return breweryPageRepository.findAll(stars, chaine, pageable);
     }
 
     public Brewery findById(Integer breweryId) {

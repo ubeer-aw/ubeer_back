@@ -24,6 +24,8 @@ public class Brewery {
     private String img;
     @OneToMany(mappedBy="brewery", cascade = CascadeType.ALL)
     private Set<Product> products;
+    @ManyToMany
+    private Set<BreweryCategory> categories;
 
     public Brewery() {
     }
@@ -84,15 +86,25 @@ public class Brewery {
         return user;
     }
 
+    public Set<BreweryCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<BreweryCategory> categories) {
+        this.categories = categories;
+    }
+
     @Override
     public String toString() {
         return "Brewery{" +
                 "id=" + id +
+                ", user=" + user +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", stars=" + stars +
                 ", img='" + img + '\'' +
                 ", products=" + products +
+                ", categories=" + categories +
                 '}';
     }
 }
