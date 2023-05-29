@@ -21,6 +21,7 @@ public class BreweryCategoryController {
 
     @PostMapping("/api/private/brewery/category")
     public void addCategory(@RequestBody BreweryCategory breweryCategory) {
+        breweryCategory.setName(breweryCategory.getName().trim());
         breweryCategoryService.addCategory(breweryCategory);
     }
 }

@@ -1,15 +1,20 @@
 package fr.ubeer.ubeer_back.controller;
 
 import fr.ubeer.ubeer_back.entity.Brewery;
+import fr.ubeer.ubeer_back.entity.BreweryCategory;
 import fr.ubeer.ubeer_back.service.BreweryCategoryService;
 import fr.ubeer.ubeer_back.service.BreweryService;
 import fr.ubeer.ubeer_back.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -24,12 +29,42 @@ public class BreweryController {
     @Autowired
     private BreweryCategoryService breweryCategoryService;
 
+
+
     @GetMapping("/api/public/brewery")
-    public Page<Brewery> getBrewery(@RequestParam(value = "stars", required = false) Double stars,
-                                    @RequestParam(value = "categories", required = false) ArrayList<String> categories,
-                                    @RequestParam("page") int page, @RequestParam("size") int size) {
-        return breweryService.findAll(stars, categories, page, size);
+    public Page<Brewery> getBrewery(
+            @RequestParam("categories") Set<Integer> categoryIds,
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam("page") int page, @RequestParam("size") int size
+    ) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Set<BreweryCategory> categories = new HashSet<>();
+        if ((categoryIds != null && !categoryIds.isEmpty()) && (name.length() > 0)) {
+            System.out.println("1 : " + name);
+            System.out.println("1 : " + categoryIds);
+            for (Integer categoryId : categoryIds) {
+                BreweryCategory category = new BreweryCategory();
+                category.setId(categoryId);
+                categories.add(category);
+            }
+            return breweryService.getBreweriesByCategoriesAndName(categories, name, pageable);
+        } else if (categoryIds != null && !categoryIds.isEmpty()) {
+            System.out.println("2 : " + categoryIds);
+            for (Integer categoryId : categoryIds) {
+                BreweryCategory category = new BreweryCategory();
+                category.setId(categoryId);
+                categories.add(category);
+            }
+            return breweryService.getBreweriesByCategories(categories, pageable);
+        } else if ((name.length() > 0)) {
+            System.out.println("3 : " + name );
+            return breweryService.getBreweriesByName(name, pageable);
+        } else {
+            System.out.println("4");
+            return breweryService.findAll(pageable);
+        }
     }
+
 
     @GetMapping( "/api/public/brewery/{id}" )
     public Brewery getBreweryById(@PathVariable Integer id) {

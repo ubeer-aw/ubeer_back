@@ -1,6 +1,7 @@
 package fr.ubeer.ubeer_back.service;
 
 import fr.ubeer.ubeer_back.entity.Brewery;
+import fr.ubeer.ubeer_back.entity.BreweryCategory;
 import fr.ubeer.ubeer_back.repository.BreweryPageRepository;
 import fr.ubeer.ubeer_back.repository.BreweryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class BreweryService {
@@ -22,13 +24,20 @@ public class BreweryService {
     @Autowired
     private BreweryPageRepository breweryPageRepository;
 
-    public Page<Brewery> findAll(Double stars, ArrayList<String> categories, int page, int size) {
-        Pageable pageable = PageRequest.of(page - 1, size);
+    public Page<Brewery> findAll(Pageable pageable) {
+        return breweryPageRepository.findAll(pageable);
+    }
+    public Page<Brewery> getBreweriesByCategories(Set<BreweryCategory> categories, Pageable pageable) {
+        return breweryPageRepository.findByCategoriesIn(categories, pageable);
+    }
 
-        String chaine = categories.toString();
-        chaine = chaine.substring(1, chaine.length() - 1);
-        if(categories.isEmpty()) chaine = null;
-        return breweryPageRepository.findAll(stars, chaine, pageable);
+    public Page<Brewery> getBreweriesByName(String name, Pageable pageable) {
+        return breweryPageRepository.findByNameContainingIgnoreCase(name, pageable);
+    }
+
+    public Page<Brewery> getBreweriesByCategoriesAndName(
+            Set<BreweryCategory> categories, String name, Pageable pageable) {
+        return breweryPageRepository.findByCategoriesInAndNameContainingIgnoreCase(categories, name, pageable);
     }
 
     public Brewery findById(Integer breweryId) {

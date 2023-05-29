@@ -10,7 +10,7 @@ public class BreweryCategory {
     @Column(name = "ID", unique = true)
     private Integer id;
 
-    @Column(name = "NOM", nullable = false)
+    @Column(name = "NOM", nullable = false, unique = true)
     private String name;
 
     public BreweryCategory() {
